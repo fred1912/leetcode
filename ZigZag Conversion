@@ -1,0 +1,38 @@
+public class Solution {
+    public String convert(String s, int numRows) {
+        
+        if (s.length()==1||numRows<=1){
+            return s;
+        }
+        
+        StringBuffer[] matrix = new StringBuffer[numRows];
+     
+        int index = 0;
+   
+        
+        for (int i = 0; i < numRows; i++){
+            matrix[i] = new StringBuffer("");
+        }
+        
+        while(index<s.length()){
+            //downline
+            for (int i=0;(index<s.length()&&i<=(numRows-1));i++){
+                matrix[i].append(s.charAt(index++));
+            }
+            // zigzagline
+            for (int i=numRows-2;index<s.length()&&i>0;i--) {
+                matrix[i].append(s.charAt(index++));
+            }
+        }
+        
+        StringBuffer result = new StringBuffer("");
+       
+        for (int i=0;i<numRows;i++){
+         
+         result.append(matrix[i]);
+            
+        }
+       
+        return result.toString();
+    }
+}
