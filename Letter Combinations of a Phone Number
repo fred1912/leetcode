@@ -1,0 +1,59 @@
+public class Solution {
+    
+    String map[] = {"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+    
+    public List<String> letterCombinations(String digits) {
+        
+        List<String> result = new ArrayList<String>();
+        
+     try{
+     
+      boolean flag = (digits.charAt(0)=='1');   
+     
+         
+     }
+     
+     catch(Exception e){
+         
+         return result;
+     }
+       
+       
+       if ((digits =="")||(digits == null)) {
+            
+           return result;
+   
+        }
+        
+        
+        dfs(digits,new StringBuilder(),result,0);
+        
+        return result;
+        
+        
+    }
+    
+    public void dfs(String digit, StringBuilder sb, List<String> result, int index){
+        
+      
+        int len = digit.length();
+        
+        if (index == len){
+            
+            result.add(sb.toString());
+            return;
+            
+        }
+        
+        String s = map[digit.charAt(index)-'0'];
+        for (int i=0;i<s.length();i++){
+            
+            sb.append(s.charAt(i));
+            dfs(digit, sb, result, index+1);
+            sb.deleteCharAt(sb.length()-1);
+            
+        }
+        
+    }
+    
+}
