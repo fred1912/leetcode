@@ -1,0 +1,29 @@
+public class Solution {
+    public String intToRoman(int num) {
+      
+      StringBuilder result = new StringBuilder();
+      
+      int[] nums = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+	  String[] symbols = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"}; 
+      int digit = 0;
+      
+      
+      if ((num<=0)||(num>3999)) return null;
+      
+      while (num>0){
+          
+          int times = num/nums[digit];
+          
+          num = num - times*nums[digit];
+          
+          for(;times>0;times--) result.append(symbols[digit]);
+          
+          digit++;
+          
+      }
+      
+      return result.toString();
+    
+        
+    }
+}
