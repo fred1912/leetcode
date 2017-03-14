@@ -1,0 +1,36 @@
+public class Solution {
+    public int romanToInt(String s) {
+        
+        if (s=="") return 0;
+        
+        int temp1 = 0,temp2 = 0;
+        int result=0 ;
+        
+        int[] nums = {1000, 500,  100,  50, 10, 5, 1};
+	    char[] symbols = {'M', 'D', 'C', 'L', 'X', 'V','I'};
+	    
+	    for (int i=0;i<s.length()-1;i++){
+	        
+	        for (int j=0;j<=6;j++){
+	         
+	         if (s.charAt(i)==symbols[j]) temp1 = nums[j];
+	         if (s.charAt(i+1)==symbols[j]) temp2= nums[j];
+	            
+	            
+	        }
+	        
+	        if (temp1<temp2) {
+	            result-=temp1;
+	        }else{
+	            result+=temp1;
+	        }
+	        
+	    }
+	    
+	    for (int j=0;j<=6;j++)
+	        if (s.charAt(s.length()-1)==symbols[j]) temp2= nums[j];
+	    
+	    return result+temp2;
+        
+    }
+}
