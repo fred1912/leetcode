@@ -1,0 +1,27 @@
+public class Solution {
+  
+    public int divide(int dividend, int divisor) {
+        
+        if (dividend>Integer.MAX_VALUE) return Integer.MAX_VALUE;
+        
+        long a = Math.abs((long)dividend);
+        long b = Math.abs((long)divisor);
+        
+        long temp = (long)dividend/(long)divisor;
+        if (temp>Integer.MAX_VALUE) return Integer.MAX_VALUE;
+        
+        int result = 0;
+        
+        while (a>=b){
+            
+            for(long i=b, num=1; a>=i; i<<=1, num<<=1){
+                
+                a = a - i;
+                result += num;
+            }
+            
+        }
+    
+        return (dividend>0)^(divisor>0)?-result:result;
+    }
+}
