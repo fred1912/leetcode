@@ -1,0 +1,52 @@
+public class Solution {
+    public boolean isMatch(String s, String p) {
+        
+        int lenS = s.length();
+        int lenP = p.length();
+        
+        int indexS = 0;
+        int indexP = 0;
+        
+        int indexS_backUp = -1;
+        int indexP_backUp = -1;
+        
+        while (indexS<lenS){
+            if (indexP < lenP&&matchChar(s.charAt(indexS),p.charAt(indexP))){
+                indexS++;
+                indexP++;
+            }
+            else if (indexP < lenP&&p.charAt(indexP)=='*'){
+                indexS_backUp = indexS;
+                indexP_backUp = indexP;
+                
+                indexP++;
+            }
+            else if (indexP_backUp!=-1){
+                indexP = indexP_backUp;
+                indexP++;
+                
+                indexS_backUp++;
+                indexS = indexS_backUp;
+                
+            }
+            else{
+                return false;
+            }
+            
+        }
+    
+        while (indexP<lenP){
+            if (p.charAt(indexP)!='*') return false;
+            indexP++;
+        }
+        
+        return true;
+        
+    }
+    
+    public boolean matchChar(char s, char p){
+        if (s==p||p=='?') return true;
+        return false;
+        
+    }
+}
