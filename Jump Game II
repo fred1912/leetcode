@@ -1,0 +1,24 @@
+public class Solution {
+    public int jump(int[] nums) {
+        
+        int[] pre =new int[nums.length];
+        int reach = 0;
+        
+        for (int i=0;i<nums.length;i++){
+            if (i+nums[i]>reach){
+                for (int j=reach+1;j<=i+nums[i]&&j<nums.length;j++){
+                    pre[j] = i;
+                }
+            reach = i + nums[i];}
+        }
+        int ans = 0;
+        int place = nums.length -1;
+        while (place>0){
+            place = pre[place];
+            ans++;
+        }
+        
+        return ans;
+        
+    }
+}
