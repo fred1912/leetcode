@@ -1,0 +1,29 @@
+public class Solution {
+    public String multiply(String num1, String num2) {
+     
+     if (num1 == null||num2 == null){
+         return null;
+     }
+     
+     int[] product = new int[num1.length()+num2.length()];
+     
+     for (int i=0;i<num1.length();i++)
+        for (int j=0;j<num2.length();j++){
+            product[i+j] += (num1.charAt(num1.length()-1-i)-'0')*(num2.charAt(num2.length()-1-j)-'0');
+        }
+        
+    StringBuilder result = new StringBuilder();
+    int carry = 0;
+    
+    for (int i=0;i<num1.length()+num2.length();i++){
+        product[i]=product[i]+carry;
+        int digit = product[i]%10;
+            carry = product[i]/10;
+            result.insert(0,digit);
+    }
+    while (result.length()>1&&result.charAt(0)=='0'){
+        result.deleteCharAt(0);
+    }
+    return result.toString();
+  }
+}
