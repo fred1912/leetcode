@@ -1,0 +1,23 @@
+public class Solution {
+    public int sum = 0;
+    public long upperlim = 1;
+    public int totalNQueens(int n) {
+        upperlim = (upperlim<<n)-1;
+        matrix67(0,0,0);
+        return sum;
+    }
+    public void matrix67(long row, long ld, long rd){
+        
+        if (row!=upperlim){
+            
+            long pos = upperlim&(~(row|ld|rd));
+            while (pos!=0){
+                long p = pos&(-pos);
+                pos -= p;
+                matrix67(row+p,(ld+p)<<1,(rd+p)>>1);
+            }
+        }else{
+            sum++;
+        }
+    }
+}
