@@ -1,0 +1,47 @@
+public class Solution {
+    public int[][] generateMatrix(int n) {
+        int[][] result = new int[n][n];
+        int left = 0,right = n-1,top = 0,buttom = n-1;
+        int x=0, y=0, dx = 1, dy = 0;
+        for (int i=1;i<=n*n;i++){
+                result[y][x] = i;
+                x+=dx;
+                y+=dy;
+                if (x>right&&dx==1){
+                    top++;
+                    x--;
+                    y++;
+                    dx=0;
+                    dy=1;
+                    continue;
+                }
+                if (x<left&&dx==-1){
+                    buttom--;
+                    x++;
+                    y--;
+                    dx=0;
+                    dy=-1;
+                    continue;
+                }
+                if (y<top&&dy==-1){
+                    left++;
+                    x++;
+                    y++;
+                    dx=1;
+                    dy=0;
+                    continue;
+                }
+                if (y>buttom&&dy==1){
+                    right--;
+                    x--;
+                    y--;
+                    dx=-1;
+                    dy=0;
+                    continue;
+                }
+               
+            }
+            return result;
+            
+    }
+}
