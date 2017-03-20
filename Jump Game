@@ -1,0 +1,26 @@
+public class Solution {
+    public boolean canJump(int[] nums) {
+        
+        int[] pre = new int[nums.length];
+
+        int reach = 0;
+        for (int i = 0;i<nums.length;i++){
+            if (i+nums[i]>reach){
+                for (int j=reach+1;j<=i+nums[i]&&j<nums.length;j++){
+                    pre[j] = i;
+                }
+                reach = i+nums[i];
+            }
+        }
+        int k = pre[nums.length-1];
+        int num = 0;
+        pre[0] = -1;
+        while (k>-1){
+           
+            k = pre[k];
+            num++;
+            if (num>nums.length) return false;
+        }
+        return true;
+    }
+}
