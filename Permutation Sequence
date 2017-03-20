@@ -1,0 +1,27 @@
+public class Solution {
+    public String getPermutation(int n, int k) {
+        
+        LinkedList<Character> ch = new LinkedList<Character>();
+        for (char i='1' ;i<='0'+n;i++) 
+            ch.add(i);
+            
+        k--;
+        StringBuilder s = new StringBuilder();
+        int sum = 1;
+        for (int i=2;i<=n;i++){
+            sum = sum*i;
+        }
+        for (int i=n;i>=1;i--){
+            
+            sum = sum/i;
+            int place = k/sum;
+            k = k%sum;
+            
+            s.append(ch.get(place));
+            ch.remove(place);
+            
+        }
+        
+        return s.toString();
+    }
+}
