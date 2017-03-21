@@ -1,0 +1,53 @@
+public class Solution {
+    public List<String> fullJustify(String[] words, int maxWidth) {
+        
+        List<String> result = new ArrayList<String>();
+        int len = words.length;
+
+        int start = 0;
+        int end = 1;
+       // int start = 0;
+        
+        while (start<len){
+            int space = 0;
+            int wordLength = words[start].length();
+            
+            while (end<len&&space+wordLength+1+words[end].length()<=maxWidth){
+                space++;
+                wordLength = wordLength + words[end].length();
+                end++;
+               
+            }
+            if (end == len){
+                StringBuilder s = new StringBuilder(words[start]);
+                for (int i=start+1;i<end;i++)
+                    s.append(" "+words[i]);
+                for (int i=wordLength+space;i<maxWidth;i++)
+                    s.append(" ");
+                result.add(s.toString());
+                break;
+            }
+            if (end-start==1){
+                StringBuilder s = new StringBuilder(words[start]);
+                for (int i=wordLength;i<maxWidth;i++)
+                    s.append(" ");
+                result.add(s.toString());
+            }else{
+                int Spa = (maxWidth-wordLength)/(end-start-1);
+                int remains = maxWidth-wordLength-(end-start-1)*Spa;
+                StringBuilder s = new StringBuilder(words[start]);
+                for (int i=start+1;i<end;i++){
+                    for (int j=0;j<Spa;j++)
+                        s.append(" ");
+                    if (remains-->0) s.append(" ");
+                    s.append(words[i]);
+                }
+                result.add(s.toString());
+            }
+            start = end;
+            end++;
+            
+        }
+        return result;
+    }
+}
