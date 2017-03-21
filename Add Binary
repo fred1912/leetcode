@@ -1,0 +1,33 @@
+public class Solution {
+    public String addBinary(String a, String b) {
+        
+        String result = "";
+        
+        if (a.length()<b.length()){
+            String s = a;
+            a = b;
+            b = s;
+        }
+        
+        int lenA = a.length()-1;
+        int lenB = b.length()-1;
+        int carries = 0;
+        
+        while (lenB>=0){
+            int sum = carries+(int)(a.charAt(lenA)-'0')+(int)(b.charAt(lenB)-'0');
+            result = String.valueOf(sum%2)+result;
+            carries = sum/2;
+            lenB--;
+            lenA--;
+        }
+        while (lenA>=0){
+            int sum = carries+(int)(a.charAt(lenA)-'0');
+            result = String.valueOf(sum%2)+result;
+            carries = sum/2;
+            //lenB--;
+            lenA--;
+        }
+        if (carries!=0) result= String.valueOf(carries)+result;
+        return result;
+    }
+}
