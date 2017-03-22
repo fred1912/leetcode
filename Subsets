@@ -1,0 +1,31 @@
+public class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        
+        if (nums==null) return null;
+        
+        List<List<Integer>> result  = new ArrayList<List<Integer>>();
+        List<Integer> list = new ArrayList<Integer>();
+        result.add(list);
+        
+        int len = nums.length;
+        Arrays.sort(nums);
+        
+        for (int k=1;k<=len;k++){
+            dfs(new ArrayList<Integer>(),0,result,nums,k);
+        }
+        return result;
+        
+    }
+    
+   public void dfs(List<Integer> list, int num,List<List<Integer>> result,int[] nums,int k){
+       if (list.size()==k){
+           result.add(new ArrayList(list));
+           return;
+       }
+       for (int i = num;i<nums.length;i++){
+           list.add(nums[i]);
+           dfs(list,i+1,result,nums,k);
+           list.remove(new Integer(nums[i]));
+       }
+   }    
+}
