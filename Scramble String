@@ -1,0 +1,32 @@
+public class Solution {
+    public boolean isScramble(String s1, String s2) {
+        
+        if (s1==null||s2==null) return false;
+        
+        int len = s1.length();
+        if (s2.length()!=len) return false;
+        
+        boolean[][][] dp = new boolean[len][len][len+1];
+        
+        for (int k=1;k<=len;k++){
+            for(int i = 0;i<=len-k;i++){
+                for(int j=0;j<=len-k;j++){
+                    if (k==1){
+                        dp[i][j][k]= s1.charAt(i)==s2.charAt(j);
+                        continue;
+                    }
+                    dp[i][j][k]=false;
+                    for (int num=1;num<=k-1;num++){
+                        if (dp[i][j][num]&&dp[i+num][j+num][k-num]||
+                            dp[i][j+k-num][num]&&dp[i+num][j][k-num]){
+                            
+                            dp[i][j][k] = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return dp[0][0][len];
+    }
+}
