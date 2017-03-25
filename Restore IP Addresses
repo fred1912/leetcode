@@ -1,0 +1,33 @@
+public class Solution {
+    List<String> result = new ArrayList<String>();
+    
+    public List<String> restoreIpAddresses(String s) {
+        dfs(s,0,"");
+        return result;
+    }
+    
+    public void dfs(String left, int n, String current){
+        int len = left.length();
+        if (len<4-n||len>3*(4-n)) return;
+        
+        if (n==3){
+            if (left.length()>1&&left.charAt(0)=='0') return;
+            int last = Integer.valueOf(left);
+            if (last>=0&&last<=255){
+                current += left;
+                result.add(current);
+            }
+        }
+        
+        for (int i=1;i<=3&&i<left.length();i++){
+            String str = left.substring(0,i);
+            if (str.length()>1&&str.charAt(0)=='0') return;
+            int num = Integer.valueOf(str);
+            if (num>=0&&num<=255){
+                
+                String temp = current+ str + ".";
+                dfs(left.substring(i),n+1,temp);
+            }
+        }
+    }
+}
