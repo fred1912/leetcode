@@ -1,0 +1,38 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public ListNode reverseBetween(ListNode head, int m, int n) {
+        ListNode result = new ListNode(0);
+        result.next = head;
+        ListNode firsttail= result;
+        int num = m - 1;
+        while (num-->0){
+            firsttail = firsttail.next;
+        }
+        ListNode secondtail = firsttail.next;
+        
+        num = n-m+1;
+        
+        ListNode tmpHead = null;
+        ListNode tmpNext = null;
+        ListNode node = firsttail.next;
+        while (num-->0){
+            tmpHead = node ;
+            node = node.next;
+            
+            tmpHead.next = tmpNext;
+            tmpNext = tmpHead;
+        }
+        
+        firsttail.next = tmpHead;
+        secondtail.next = node;
+        
+        return result.next;
+    }
+}
