@@ -1,0 +1,25 @@
+public class Solution {
+    public boolean isPalindrome(String s) {
+        if (s==null) return false;
+        int len = s.length();
+        
+        
+        int left = 0;
+        int right = len-1;
+        String sNew = s.toLowerCase();
+        
+        while (left<right){
+            if (!Character.isLetterOrDigit(s.charAt(left))){
+                left++;
+            }else if (!Character.isLetterOrDigit(s.charAt(right))){
+                right--;
+            }else if (sNew.charAt(left)!=sNew.charAt(right)){
+                return false;
+            }else{
+                left++;
+                right--;
+            }
+        }
+        return true;
+    }
+}
