@@ -1,0 +1,21 @@
+public class Solution {
+    public int longestConsecutive(int[] nums) {
+        if (nums.length==0) return 0;
+        
+        int ans = 1;
+        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+        for (int x:nums){
+            if (!map.containsKey(x)){
+                int left = map.containsKey(x-1)?map.get(x-1):0;
+                int right = map.containsKey(x+1)?map.get(x+1):0;
+                int sum = left+right+1;
+                map.put(x,left+right+1);
+                ans = Math.max(ans,sum);
+                
+                map.put(x-left,sum);
+                map.put(x+right,sum);
+            }
+        }
+        return ans;
+    }
+}
