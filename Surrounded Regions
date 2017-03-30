@@ -1,0 +1,60 @@
+public class Solution {
+
+    public void solve(char[][] board) {
+        if (board==null||board.length==0||board[0].length==0) return ;
+        int row = board.length;
+        int col = board[0].length;
+        
+        for (int j=0;j<col;j++){
+            bfs(board,0,j);
+            bfs(board,row-1,j);
+        }
+        for (int i=0;i<row;i++){
+            bfs(board,i,0);
+            bfs(board,i,col-1);
+        }
+        for (int i=0;i<row;i++){
+            for (int j=0;j<col;j++){
+                if (board[i][j]=='#') {
+                    board[i][j]='O';
+                    
+                }else{
+                    board[i][j]='X';
+                }
+            }
+        }
+
+        
+    }
+    
+    public void bfs(char[][] board, int x, int y){
+        int row = board.length;
+        int col = board[0].length;
+        
+        Queue<Integer> queue = new LinkedList<Integer>();
+        
+        queue.offer(x*col+y);
+        while (!queue.isEmpty()){
+            int index = queue.poll();
+            int index_X = index/col;
+            int index_Y = index%col;
+            
+            if (board[index_X][index_Y]!='O') continue;
+            board[index_X][index_Y]='#';
+            
+            if (index_Y<col-1){
+                queue.offer(index+1);
+            }
+            if (index_Y>0){
+                queue.offer(index-1);
+            }
+             if (index_X>0){
+                queue.offer(index-col);
+            }
+            if (index_X<row-1){
+                queue.offer(index+col);
+            }
+        }
+    }
+
+}
