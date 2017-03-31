@@ -1,0 +1,45 @@
+public class Solution {
+    public List<String> wordBreak(String s, List<String> wordDict) {
+        
+        List<String> result = new ArrayList<String>();
+        if (s==null||s.length()==0||wordDict==null) return result;
+        
+        List<String> path = new ArrayList<String>();
+        int len = s.length();
+        
+        boolean[] dp = new boolean[len+1];
+        dp[0] = true;
+        for (int i=1;i<=len;i++){
+            for (int j=0;j<i;j++){
+                dp[i] = dp[j]&&wordDict.contains(s.substring(j,i));
+                if (dp[i]) break;
+            }
+        }
+        
+        dfs(s,wordDict,path,result,0,dp);
+        return result;
+    }
+    
+    public void dfs(String s,List<String> wordDict,List<String> path,List<String> result, int index, boolean[] dp){
+        int len = s.length();
+        if (index == len) {
+            StringBuilder sb = new StringBuilder();
+            for (String str:path){
+                sb.append(str);
+                sb.append(" ");
+            }
+            sb.deleteCharAt(sb.length()-1);
+            result.add(sb.toString());
+            return;
+        }
+        
+        if (!dp[index]) return;
+        for (int i = index;i<len;i++){
+            String sub = s.substring(index, i+1);
+            if (!wordDict.contains(sub)) continue;
+            path.add(sub);
+            dfs(s,wordDict,path,result,i+1,dp);
+            path.remove(path.size()-1);
+        }
+    }
+}
