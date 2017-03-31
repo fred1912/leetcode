@@ -1,0 +1,15 @@
+public class Solution {
+    public int singleNumber(int[] nums) {
+        int one = 0;
+        int two = 0;
+        int three = 0;
+        for (int i = 0;i < nums.length; i++){
+            two |= (one&nums[i]);
+            one^=nums[i];
+            three = one&two;
+            two = two - three;
+            one = one - three;
+        }
+        return one;
+    }
+}
