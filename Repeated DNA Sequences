@@ -1,0 +1,41 @@
+public class Solution {
+    public List<String> findRepeatedDnaSequences(String s) {
+        List<String> result = new ArrayList<String>();
+        if (s==null||s.length()<=10) {
+            return result;
+        }
+        Set<Integer> set = new HashSet<Integer>();
+        for (int i=0;i<=s.length()-10;i++){
+            String sub = s.substring(i,i+10);
+            int key = hashCode(sub);
+            if (set.contains(key)&&!result.contains(sub)) {
+                result.add(sub);
+            }else{
+                set.add(key);
+            }
+        }
+        return result;
+    }
+    private static int hashCode(String s){
+        int hash = 0;
+        for (int i=0;i<s.length();i++){
+            hash = hash<<2| change(s.charAt(i));
+        }
+        return hash;
+    }
+    private static int change(char ch){
+        switch(ch){
+            case 'A':
+                return 0;
+            case 'C':
+                return 1;
+            case 'G':
+                return 2;
+            case 'T':
+                return 3;
+            default:
+                return 0;
+        }
+        
+    }
+}
