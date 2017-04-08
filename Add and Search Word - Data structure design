@@ -1,0 +1,84 @@
+class TrieNode{
+    boolean isWord;
+    HashMap<Character,TrieNode> nexts;
+    
+    public TrieNode(){
+        nexts = new HashMap<Character,TrieNode>();
+    }
+}
+
+public class WordDictionary {
+    
+    private TrieNode root;
+    /** Initialize your data structure here. */
+    public WordDictionary() {
+        root = new TrieNode();    
+    }
+    
+    /** Adds a word into the data structure. */
+    public void addWord(String word) {
+        char[] s = word.toCharArray();
+        
+        TrieNode p = root;
+        int i = 0;
+        int n = s.length;
+        
+        while (i<n){
+            TrieNode next = p.nexts.get(s[i]);
+            if (next!=null){
+                p = next ;
+                i++;
+            }else{
+                break;
+            }
+        }
+        while (i<n){
+            TrieNode newNode = new TrieNode();
+            p.nexts.put(s[i],newNode);
+            p = newNode;
+            i++;
+        }
+        p.isWord = true;    
+    }
+    
+    /** Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter. */
+    public boolean search(String word) {
+        if (word==null||word.length()==0) return false;
+        TrieNode p = root;
+        return dfs(word,0,p);
+    }
+    private boolean dfs(String word,int index,TrieNode p){
+        if (index==word.length()-1) {
+            if (word.charAt(index)=='.') {
+                for (TrieNode node:p.nexts.values()){
+                    if (node.isWord) return true;
+                }
+                return false;
+            }else{
+                TrieNode endNode = p.nexts.get(word.charAt(index));
+                return endNode!=null&&endNode.isWord; 
+            }
+        }
+        if (index>=word.length()) return false;
+        if (word.charAt(index)=='.'){
+            boolean result = false;
+            for (TrieNode node: p.nexts.values()){
+                result|=dfs(word,index+1,node);
+            }
+            return result;
+        }else{
+            if (p.nexts.containsKey(word.charAt(index))){
+                return dfs(word,index+1,p.nexts.get(word.charAt(index)));
+            }else{
+                return false;
+            }
+        }
+    }
+}
+
+/**
+ * Your WordDictionary object will be instantiated and called as such:
+ * WordDictionary obj = new WordDictionary();
+ * obj.addWord(word);
+ * boolean param_2 = obj.search(word);
+ */
