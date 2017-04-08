@@ -1,0 +1,40 @@
+public class Solution {
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        boolean flag = true;
+        int[] inDegree = new int[numCourses];
+        int[][] matrix = new int[numCourses][numCourses];
+        
+        for (int i=0;i<prerequisites.length;i++){
+            if (matrix[prerequisites[i][1]][prerequisites[i][0]]==1) continue;
+            inDegree[prerequisites[i][0]]++;
+            matrix[prerequisites[i][1]][prerequisites[i][0]]=1;
+        }
+        int[] result = new int[numCourses]; 
+        int count = 0;
+        for (int i=0;i<numCourses;i++){
+            for (int j=0;j<numCourses;j++){
+                if (inDegree[j]==0) {
+                    if (count>=numCourses) break;
+                    result[count++]=j;
+                    inDegree[j]--;
+                    for (int k=0;k<numCourses;k++){
+                        if (matrix[j][k]==1){
+                            inDegree[k]--;
+                            matrix[j][k]=0;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        
+        for (int i=0;i<numCourses;i++){
+            if (inDegree[i]>0) {
+                flag = false;
+                break;
+            }
+        }
+        if (!flag) return new int[0];
+        return result;
+    }
+}
