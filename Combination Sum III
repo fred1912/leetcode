@@ -1,0 +1,22 @@
+public class Solution {
+    List<List<Integer>> result = new ArrayList<List<Integer>>();
+    int k,n;
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        this.k = k;
+        this.n = n;
+        search(0,0,0,new ArrayList());
+        return result;
+    }
+    public void search(int start, int count, int sums, List<Integer> ans){
+        if (count>k||sums>n) return;
+        if (count==k&&sums==n) {
+            result.add(new ArrayList(ans));
+            return;
+        }
+        for (int i=start+1;i<=9;i++){
+            ans.add(i);
+            search(i,count+1,sums+i,ans);
+            ans.remove(ans.size()-1);
+        }
+    }
+}
