@@ -1,0 +1,6 @@
+public class Solution {
+    public int computeArea(long A, int B, long C, int D, long E, int F, long G, int H) {
+        long total = (long)(C-A)*(D-B)+(G-E)*(H-F);
+        return (int)(total-(long)(Math.max(Math.min(C,G)-Math.max(A,E),0)*Math.max(Math.min(D,H)-Math.max(B,F),0)));
+    }
+}
