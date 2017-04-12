@@ -1,0 +1,38 @@
+public class Solution {
+    
+    class Str{
+        int start = 0;
+        int temp = 0;
+        int end = 0;
+        
+        public String toString(){
+            if (this.start==this.end){
+                return ""+this.start;
+            }
+            return this.start+"->"+this.end;
+        }
+    }
+    public List<String> summaryRanges(int[] nums) {
+        List<String> result = new ArrayList<String>();
+        if (nums.length<1) return result;
+        
+        Str str = new Str();
+        str.start = nums[0];
+        str.temp = nums[0];
+        
+        for (int i=1;i<nums.length;i++){
+            if (nums[i]-str.temp==1){
+                str.temp = nums[i];
+            }else{
+                str.end = str.temp;
+                result.add(str.toString());
+                str.start = nums[i];
+                str.temp = nums[i];
+            }
+
+        }
+        str.end = str.temp;
+        result.add(str.toString());
+        return result;   
+    }
+}
