@@ -1,0 +1,25 @@
+public class Solution {
+    public int countDigitOne(int n) {
+        int count = 0;
+        long cur = 0;
+        long fac = 1;
+        long highN = 0;
+        long lowN = 0;
+        
+        while (n/fac>0){
+            cur = (n%(fac*10))/fac;
+            highN = n/(fac*10);
+            if (cur==0){
+                count += highN*fac;
+            }else if (cur==1){
+                count += highN*fac+lowN+1;
+            }else{
+                count += (highN+1)*fac;
+            }
+            lowN += cur*fac;
+            fac *= 10;
+                
+        }
+        return count;
+    }
+}
