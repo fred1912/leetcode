@@ -1,0 +1,47 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    private TreeNode ans= new TreeNode(0);
+    private TreeNode result;
+    boolean check1,check2;
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+          dfs(p,q,root,root);
+          ite(root);
+          ans.val=Integer.MAX_VALUE;
+          if (result.val<ans.val) ans = result; 
+          return ans;
+    }
+    public void dfs(TreeNode p, TreeNode q, TreeNode p1, TreeNode q1){
+        if (p1==null&&q1==null||check1&&check2) return;
+        if (p1==q1) result = p1;
+        if (p.val==p1.val) check1 = true;
+        if (q.val==q1.val) check2 = true;
+        if (!check1){    
+            if (p.val<p1.val) 
+                {
+                    p1 = p1.left;
+                }else if (p.val>p1.val) p1 = p1.right;
+        }
+        if (!check2){
+            if (q.val<q1.val) {
+                q1 = q1.left;
+            }else if (q.val>q1.val) q1 = q1.right;
+        }
+        dfs(p,q,p1,q1);
+    }
+    public void ite(TreeNode root){
+        if (result==root) return;
+        if (root.val>result.val) root = root.left;
+        if (root.val<result.val) root = root.right;
+        if (result.val>root.val) ans = root;  
+        ite(root);
+    }
+    
+}
