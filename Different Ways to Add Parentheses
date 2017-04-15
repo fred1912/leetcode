@@ -1,0 +1,39 @@
+public class Solution {
+    private HashMap<String,List<Integer>> map = new HashMap<String,List<Integer>>(); 
+    public List<Integer> diffWaysToCompute(String input) {
+        List<Integer> result = new ArrayList<Integer>(); 
+        for (int i=0;i<input.length();i++){
+            char ch = input.charAt(i);
+            if (ch=='+'||ch=='-'||ch=='*'){
+                String sLeft = input.substring(0,i);
+                String sRight = input.substring(i+1,input.length());
+                List<Integer> left = null;
+                List<Integer> right = null;
+                if (map.containsKey(sLeft)){
+                    left = map.get(sLeft);   
+                }else left = diffWaysToCompute(sLeft);
+                if (map.containsKey(sRight)){
+                    right = map.get(sRight);   
+                }else right = diffWaysToCompute(sRight); 
+                for (int l:left){
+                    for (int r:right){
+                        switch(ch){
+                            case '+':
+                                result.add(l+r);
+                                break;
+                            case '-':
+                                result.add(l-r);
+                                break;
+                            case '*':
+                                result.add(l*r);
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+        if (result.size()==0) result.add(Integer.valueOf(input));
+        map.put(input,result);
+        return result;
+    }
+}
