@@ -1,0 +1,38 @@
+public class MedianFinder {
+    PriorityQueue<Long> maxHeap;
+    PriorityQueue<Long> minHeap;
+    /** initialize your data structure here. */
+    public MedianFinder() {
+        maxHeap = new PriorityQueue<>(new Comparator<Long>(){
+            public int compare(Long o1,Long o2) {
+                long o = o2-o1;
+                return (int)o;
+            }
+        });
+        minHeap = new PriorityQueue<>(new Comparator<Long>(){
+            public int compare(Long o1,Long o2) {
+                long o = o1-o2;
+                return (int)o;
+            }
+        });   
+    }
+    
+    public void addNum(int num) {
+        maxHeap.add(num+0L);
+        minHeap.add(maxHeap.poll());
+        if (minHeap.size()-maxHeap.size()>1){
+            maxHeap.add(minHeap.poll());
+        }
+    }
+    
+    public double findMedian() {
+        return minHeap.size()>maxHeap.size()?minHeap.peek():(minHeap.peek()+maxHeap.peek())/2.0;
+    }
+}
+
+/**
+ * Your MedianFinder object will be instantiated and called as such:
+ * MedianFinder obj = new MedianFinder();
+ * obj.addNum(num);
+ * double param_2 = obj.findMedian();
+ */
