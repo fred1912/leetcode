@@ -1,0 +1,25 @@
+public class Solution {
+    public List<String> removeInvalidParentheses(String s) {
+        List<String> result = new ArrayList<String>();
+        remove(s,0,0,result,')');
+        return result;
+        
+    }
+    public void remove(String s, int last_i, int last_j, List<String> result,char ch){
+        for (int i=last_i, stack = 0;i<s.length();i++){
+            if (s.charAt(i)=='('||s.charAt(i)==')'){
+            if (s.charAt(i)!=ch) stack++;
+            if (s.charAt(i)==ch) stack--;}
+            if (stack>=0) continue;
+            for (int j=last_j;j<=i;j++){
+                if (s.charAt(j)==ch&&(j==last_j||s.charAt(j-1)!=ch))
+                    remove(s.substring(0,j)+s.substring(j+1,s.length()),i,j,result,ch);
+            }
+            return ;
+        }
+        String reverse = new StringBuilder(s).reverse().toString();
+        if (ch==')') remove(reverse,0,0,result,'(');
+        else
+            result.add(reverse);
+    } 
+}
