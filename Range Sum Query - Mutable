@@ -1,0 +1,45 @@
+public class NumArray {
+
+    int[] bit;
+    int len;
+    int[] nums;
+    public NumArray(int[] nums) {
+        this.nums = nums;
+        len = nums.length;
+        bit = new int[nums.length+1];
+        for (int i=0;i<nums.length;i++){
+            add(i+1,nums[i]);
+        }
+    }
+    public void add(int index, int num){
+        while (index<=len){
+            bit[index]+=num;
+            index += (index&-index);
+        }
+    }
+    
+    public int sum(int index){
+        int ans = 0;
+        while (index>0){
+            ans += bit[index];
+            index -= (index&-index); 
+        }
+        return ans;
+    }
+    
+    public void update(int i, int val) {
+        add(i+1,val-nums[i]);
+        nums[i] = val;
+    }
+    
+    public int sumRange(int i, int j) {
+        return sum(j+1)-sum(i);    
+    }
+}
+
+/**
+ * Your NumArray object will be instantiated and called as such:
+ * NumArray obj = new NumArray(nums);
+ * obj.update(i,val);
+ * int param_2 = obj.sumRange(i,j);
+ */
