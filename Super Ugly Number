@@ -1,0 +1,30 @@
+public class Solution {
+    public int nthSuperUglyNumber(int n, int[] primes) {
+        int[] ans = new int[n];
+        int[] num = new int[primes.length];
+        int[] val = new int[primes.length];
+        
+        ans[0] = 1;
+        for (int i=1;i<n;i++){
+            for (int j=0;j<primes.length;j++){
+                val[j]= ans[num[j]]*primes[j];
+            }
+            ans[i]= search(val);
+            for (int j=0;j<primes.length;j++){
+                if (ans[i]==val[j]){
+                    num[j]++;
+                }
+            }
+            
+        }
+        return ans[n-1];
+        
+    }
+    public int search(int[] val){
+        int min = val[0];
+        for (int i=1;i<val.length;i++){
+            min = Math.min(val[i],min);
+        }
+        return min;
+    }
+}
