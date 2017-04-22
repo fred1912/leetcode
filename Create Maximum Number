@@ -1,0 +1,43 @@
+public class Solution {
+    public int[] maxNumber(int[] nums1, int[] nums2, int k) {
+        int[] ans = new int[k];
+        for (int i=Math.max(0,k-nums2.length);i<=Math.min(nums1.length,k);i++){
+            int[] temp1 = getMaxArray(nums1,i);
+            int[] temp2 = getMaxArray(nums2,k-i);
+            int[] temp = new int[k];
+            int pos1=0,pos2 = 0,index=0;
+            while (pos1<temp1.length||pos2<temp2.length){
+                temp[index++] = judge(temp1,pos1,temp2,pos2)?temp1[pos1++]:temp2[pos2++];
+               
+            }
+            
+            for (int a=0,b=0;a<temp.length&&b<ans.length;a++,b++){
+                if (temp[a]>ans[b]) {ans = temp;break;}
+                if (temp[a]<ans[b]) {break;}
+            }
+        }
+        return ans;   
+    }
+    public int[] getMaxArray(int[] nums,int k){
+        int[] ans = new int[k];
+        int len = 0;
+        
+        for (int i=0;i<nums.length;i++){
+            while (len>0&&len+nums.length-i>k&&ans[len-1]<nums[i]){
+                len--;    
+            }
+            if (len<k){
+                ans[len++] = nums[i];
+            }
+        }
+        
+        return ans;
+    }
+    boolean judge(int[] nums1, int i, int[] nums2, int j){
+        for (;i<nums1.length&&j<nums2.length;i++,j++){
+            if (nums1[i]>nums2[j]) return true;
+            if (nums1[i]<nums2[j]) return false;
+        }
+        return i!=nums1.length;
+    }
+}
