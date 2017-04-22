@@ -1,0 +1,26 @@
+public class Solution {
+    public String removeDuplicateLetters(String s) {
+        
+        boolean[] visited = new boolean[125];
+        int[] number = new int[125];
+        
+        for (int i=0;i<s.length();i++){
+            number[s.charAt(i)-'a']++;    
+        }
+        
+        String result="";
+        for (int i=0;i<s.length();i++){
+            number[s.charAt(i)-'a']--;
+            if (visited[s.charAt(i)-'a']) continue;
+            while (result.length()!=0&&s.charAt(i)<result.charAt(result.length()-1)&&number[result.charAt(result.length()-1)-'a']>0){
+                visited[result.charAt(result.length()-1)-'a'] = false;
+                result = result.substring(0,result.length()-1);
+            }
+            
+            visited[s.charAt(i)-'a']=true;
+            result += String.valueOf(s.charAt(i));
+        }
+        
+        return result;
+    }
+}
