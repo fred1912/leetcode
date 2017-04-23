@@ -1,0 +1,39 @@
+public class Solution {
+    int lower,upper;
+    long[] counts;
+    public int countRangeSum(int[] nums, int lower, int upper) {
+        int len = nums.length;
+        if (len<=0) return 0;
+        
+        this.lower = lower;
+        this.upper = upper;
+        
+        counts = new long[len];
+        counts[0] = nums[0];
+        for (int i=1;i<len;i++){
+            counts[i] = counts[i-1]+nums[i];
+        }
+        
+        return countNum(nums,0,nums.length-1);
+    }
+    
+    public int countNum(int[] nums, int start, int end){
+        if (start>=end){
+            if (nums[start]>=lower&&nums[end]<=upper) return 1;
+            return 0;
+        }
+        
+        
+        int mid = (start+end)/2;
+        int ans=countNum(nums,start,mid)+countNum(nums,mid+1,end);
+        for (int i=start;i<=mid;i++){
+            for (int j=mid+1;j<=end;j++){
+                long temp = nums[i]+counts[j]-counts[i];
+                if (temp>=lower&&temp<=upper){
+                    ans++;
+                }
+            }
+        }
+        return ans;
+    }
+}
