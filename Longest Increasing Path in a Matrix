@@ -1,0 +1,35 @@
+public class Solution {
+    public int longestIncreasingPath(int[][] matrix) {
+        if (matrix.length==0||matrix[0].length==0){
+            return 0;
+        }
+        int[][] dp = new int[matrix.length][matrix[0].length];
+        int max = Integer.MIN_VALUE;
+        boolean[][] visited;
+        for (int i=0;i<matrix.length;i++){
+            for (int j=0;j<matrix[0].length;j++){
+                visited = new boolean[matrix.length][matrix[0].length];
+                max = Math.max(search(1,i,j,matrix,visited),max);
+            }
+            
+        }
+        return max;
+    }
+    public int search(int ans,int i, int j, int[][] nums, boolean[][] visited){
+   
+        int result = ans;
+        if (i>0) {
+            if (nums[i-1][j]>nums[i][j]) result = Math.max(result,search(ans+1,i-1,j,nums,visited));
+        }
+        if (i+1<nums.length){
+            if (nums[i+1][j]>nums[i][j]) result = Math.max(result,search(ans+1,i+1,j,nums,visited));
+        }
+        if (j>0){
+            if (nums[i][j-1]>nums[i][j]) result = Math.max(result,search(ans+1,i,j-1,nums,visited));
+        }
+        if (j+1<nums[0].length){
+            if (nums[i][j+1]>nums[i][j]) result = Math.max(result,search(ans+1,i,j+1,nums,visited));
+        }
+        return result;
+    }
+}
