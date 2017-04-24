@@ -2,7 +2,7 @@ public class Solution {
     public int minPatches(int[] nums, int n) {
         int i = 0;
         int count = 0;
-        int add = 1;
+        long add = 1;
         while (add<=n){
             if (i<nums.length&&add>=nums[i]){
                 add+=nums[i];
