@@ -1,0 +1,53 @@
+public class Solution {
+    public List<List<Integer>> palindromePairs(String[] words) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        if (words.length==0) return result;
+        HashMap<String,Integer> map = new HashMap<String,Integer>();
+        
+        for (int i=0;i<words.length;i++){
+            map.put(words[i],i);
+        }
+        for (int i=0;i<words.length;i++){
+            int l = 0;
+            int r = 0;
+            while (l<=r) {
+                String sub = words[i].substring(l,r);
+                Integer j = map.get(new StringBuilder(sub).reverse().toString());
+                
+                if (j!=null&&i!=j&&l==0){
+                  //  if (j==1) return result;
+                    if (isPalindrome(words[i].substring(r,words[i].length()))){
+                      //  if (j==1) return result;
+                        List<Integer> list = new ArrayList<Integer>();
+                        list.add(i);
+                        list.add(j);
+                        result.add(list);
+                    }
+                }else if (j!=null&&i!=j&&l!=0){
+                    if (isPalindrome(words[i].substring(0,l))){
+                        List<Integer> list = new ArrayList<Integer>();
+                        list.add(j);
+                        list.add(i);
+                        result.add(list);                        
+                    }
+                }
+                
+                if (words[i].length()==r){
+                    l++;
+                }else{
+                    r++;
+                }
+                    
+                
+            }
+        }
+        return result;
+    }
+    public boolean isPalindrome(String s){
+        if (s==null) return false;
+        for (int k=0;k<s.length()/2;k++){
+            if (s.charAt(k)!=s.charAt(s.length()-k-1)) return false;
+        }
+        return true;
+    }
+}
