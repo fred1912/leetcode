@@ -1,0 +1,48 @@
+public class Solution {
+    public int maxSumSubmatrix(int[][] matrix, int k) {
+        if (matrix==null||matrix.length==0) return 0;
+        int m = matrix.length;
+        int n = matrix[0].length;
+        
+        int result = Integer.MIN_VALUE;
+        for (int i=0;i<n;i++){
+            int r = i;
+            int[] local = new int[m];
+            while (r<n){
+                for (int x=0;x<m;x++){
+                    local[x] += matrix[x][r];
+                }
+                int localResult = search(local,k);
+                result = Math.max(result,localResult);
+                r++;
+            }
+        }
+        return result;
+    }
+    private int search(int[] nums,int target){
+        int len = nums.length;
+        int[] sums = new int[len];
+        int sum = 0;
+        int result = Integer.MIN_VALUE;
+        TreeSet<Integer> set = new TreeSet<Integer>();
+        
+        for (int i=0;i<len;i++){
+            sum+=nums[i];
+        }
+        for (int i=len-1;i>=0;i--){
+            sums[i] = sum;
+            if (sums[i]<=target){
+                result = Math.max(result,sums[i]);
+            }
+            if (i!=len-1){
+                Integer floor = set.floor(target+sums[i]);
+                if (floor!=null){
+                    result = Math.max(result,floor-sums[i]);
+                }
+            }
+            sum -= nums[i];
+            set.add(sums[i]);
+        }
+        return result;
+    }
+}
