@@ -1,0 +1,15 @@
+public class Solution {
+    public boolean isPerfectSquare(int num) {
+        long l = 1;
+        long r = (num>>1)+1;
+        
+        while (l<=r){
+            long m = l+((r-l)>>1);
+            long mul = m*m;
+            if (mul==num) return true;
+            if (mul<num) l=m+1;
+            else r=m-1;
+        }
+        return false;
+    }
+}
