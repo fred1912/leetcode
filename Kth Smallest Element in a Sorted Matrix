@@ -1,0 +1,26 @@
+public class Solution {
+    public int kthSmallest(int[][] matrix, int k) {
+        int n = matrix.length;
+        int l = matrix[0][0];
+        int r = matrix[n-1][n-1];
+        while (l<r){
+            int mid = l+((r-l)>>1);
+            int temp = 0;
+            for (int i=0;i<n;i++) temp+=binarySearch(matrix[i],n,mid);
+            if (temp<k) l = mid+1;
+            else r=mid;
+        }
+        return l;
+    }
+    
+    public int binarySearch(int[] row,int n,int num){
+        int l = 0;
+        int r = n;
+        while (l<r){
+            int mid = (l+r)/2;
+            if (row[mid]<=num) l = mid+1;
+            else r = mid;
+        }
+        return l;
+    }
+}
